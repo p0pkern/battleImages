@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 1.5rem;
+    padding-bottom: 20px;
+    background-color: rgb(167, 167, 196);
+}
+
+#header p {
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+img {
+    width: 300px;
+    height: 300px;
+}
+
+.vote-data, 
+.title-image, 
+.vote-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+#battle-area, #champion {
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+}
+
+#champion {
+    justify-content: center;
+    padding: 30px;
+}
