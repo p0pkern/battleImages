@@ -12,10 +12,16 @@
 </head>
 <body>
     <!-- /* Top Title */ -->
-    <section id="header">
+    <div id="header">
         <h1>Battle Images!</h1>
         <p>By Chris Peterman</p>
-    </section>
+    </div>
+
+    <!-- TEST -->
+    <div class="total-it">
+        <button onclick="finishVoting()">Total It!</button>
+    </div>
+    <!-- TEST -->
 
     <!-- /* Winner Section */ -->
     <section id="champion">
@@ -25,12 +31,12 @@
             <p id="votes-prev">1</p>
         </div>
         
-        <div class="title-image">
-            <h2>Current Champion</h2>
-            <img src="https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg">
+        <div class="title-image champion-container">
+            <h2>Champion</h2>
+            <img id="img-one" src="https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg">
         </div>
 
-        <div class="vote-data">
+        <div class="vote-data new-vote-container">
             <div class="vote-data new-vote-data">
                 <h3>Votes</h3>
                 <p id="votes-new">2</p>
@@ -60,14 +66,14 @@
 
         <div class="title-image-1">
             <h2>Challenger 1</h2>
-            <img src="https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg">
+            <img id="img-two" src="">
         </div>
 
         <div class="title-image-2">
             <h2>Challenger 2</h2>
-            <img src="https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg">
+            <img id="img-three" src="">
         </div>
-        
+
         <div class="vote-data">
             <div class="vote-data">
                 <h3>Votes</h3>
@@ -79,6 +85,7 @@
             </div>
         </div>
 
+        
     </section>
 
     <!-- /* Timer */ -->
@@ -87,6 +94,6 @@
         <p>HH :: MM :: SS</p>
     </section>
 
-    <script src="./app.js"></script>
+    <script src="./app.js" defer></script>
 </body>
 </html>

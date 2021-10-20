@@ -1,29 +1,16 @@
 * {
+    width: 100%;
+    overflow-x:hidden;
+    height: auto;
     margin: 0;
     padding: 0;
-    white-space: nowrap;
-    font-family: san;
+    white-space:nowrap;
+    font-family: sans-serif;
 }
 
 h2, h3, h1 {
+    overflow-x: visible;
     font-family: 'Erica One', cursive;
-}
-
-#header {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    font-size: 3.5rem;
-    padding-bottom: 20px;
-    background-color: rgb(167, 167, 196);
-    padding-left:30px;
-    background-color: peachpuff;
-}
-
-#header p {
-    padding-left: 40px;
-    padding-top: 50px;
-    font-size: 2rem;
 }
 
 button {
@@ -36,6 +23,29 @@ button {
     background-color: peachpuff;
 }
 
+img {
+    width: 250px;
+    height: 250px;
+}
+
+/* Header section */
+
+#header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 2em;
+    padding: 20px;
+    background-color: rgb(167, 167, 196);
+    background-color: peachpuff;
+}
+
+#header p {
+    padding-top: 30px;
+    font-size: 2rem;
+}
+
+/* Buttons */
 .up-vote:hover {
     transition-duration: 0.6ms;
     background-color: rgb(78, 231, 147);
@@ -48,71 +58,82 @@ button {
     cursor: pointer;
 }
 
-img {
-    width: 300px;
-    height: 300px;
-}
-
 .vote-data, 
 .title-image-1,
 .title-image-2, 
 .vote-buttons,
 .previous-vote-data {
+    overflow-x: visible;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding-left: 50px;
     text-align: center;
 }
 
 .vote-data {
-    margin-top: 50px;
+    padding-top: 40px;
+    padding-right: 30px;
+    margin-left: -40px;
+}
+
+.new-vote-data{
+    margin-left: -160px;
+}
+
+.champion-container {
+    margin-left: -100px;
+}
+
+.new-vote-container {
+    margin-left: -300px;
+}
+
+.previous-vote-data {
+    margin: 0;
 }
 
 #battle-area {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 30px;
-    margin-left: 10px;
-    font-size: 2em;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    margin-left: 20px;
+    font-size: 1.5em;
+    width: 95%;
 }
 
 #champion {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 30px;
-    margin-left: 80px;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 #champion h2 {
-    margin-left: -100px;
-    padding-bottom: 10px;
+    padding-left: 20px;
 }
 
-#champion .new-vote-data {
-    margin-top:15px;
-}
 
 #timer {
     text-align: center;
-    margin-top: -20px;
-    padding-bottom: 100px;
     font-size: 2em;
     background-color: peachpuff;
-}
-
-.title-image-1 {
-    padding-right: 50px;
+    padding-top: 50px;
+    padding-bottom: 100px;
 }
 
 .previous-vote-data {
     margin-top: 100px;
-    margin-left: -30px;
     margin-right: 40px;
 }
 
 .previous-vote-data {
     text-align: center;
+}
+
+
+/* Testing button  */
+.total-it {
+   text-align: center;
 }
