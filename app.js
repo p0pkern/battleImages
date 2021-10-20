@@ -15,32 +15,33 @@ let saveFile = () => {
     const challenger2 = document.getElementById('votes-2').innerText;
 
     // Convert data for text file save
-    let data = 
-        '\rwinVotes: ' + winVotes + '\r\n' +
-        'newVotes: ' + newVotes + '\r\n' +
-        'challenger1: ' + challenger1 + '\r\n' +
-        'challenger2: ' + challenger2;
+    let data = {
+        "winVotes": winVotes,
+        "newVotes": newVotes,
+        "challenger1": challenger1,
+        "challenger2": challenger2
+    }
 
-    // Convert text to Blob a file API
-    const textToBlob = new Blob([data], { type: 'text/plain'});
-    const sFileName = 'dataHold.txt';
-
+    localStorage.setItem('localSave', data);
     
 }
 
-function readTextFile(file) {
-    const rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                const allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
+function getData() {
+    
+    if(lovalStorage.getItem('localSave')) {
+        const localSave = localStorage.getItem('localSave');
+
+        document.getElementById('votes-prev').innerText = localSave['winVotes'];
+        document.getElementById('votes-new').innerText = localSave['newVotes'];
+        document.getElementById('votes-1').innerText = localSave['challenger1'];
+        document.getElementById('votes-2').innerText = localSave['challenger2'];
+    } else {
+        activateNewSession();
     }
-    rawFile.send(null);
+
+    //TODO input image response.
+}
+
+function activateNewSession() {
+    
 }
