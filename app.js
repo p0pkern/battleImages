@@ -129,9 +129,10 @@ function finishVoting() {
         // Code for Challenger 1 wins
         const imgTwo = document.getElementById('img-two').getAttribute('src');
         replaceWinner(imgTwoVotes, imgTwo);
-
     } else if (imgThreeVotes > imgOneVotes && imgThreeVotes > imgTwoVotes) {
         // Code for if Challenger 2 wins
+        const imgThree = document.getElementById('img-two').getAttribute('src');
+        replaceWinner(imgThreeVotes, imgThree)
 
     } else {
         // If neither of the two images wins, we keep the winner and delete the challengers
@@ -141,8 +142,21 @@ function finishVoting() {
 }
 
 function replaceWinner(newVotes, newSrc) {
-    const localSave = JSON.parse(localStorage.getItems('localSave'));
-    
+    const localSave = JSON.parse(localStorage.getItem('localSave'));
+
+    const newData = {
+        "winVotes": newVotes,
+        "newVotes": 0,
+        "challenger1": 0,
+        "challenger2": 0,
+        "img-one": newSrc,
+        "img-two": localSave['img-two'],
+        "img-three": localSave['img-three'],
+    }
+
+    setTimeout(localStorage.setItem('localSave', JSON.stringify(newData)), 5000);
+
+    replaceChallengers();
 }
 
 async function replaceChallengers() {
@@ -168,6 +182,12 @@ async function replaceChallengers() {
     getData();
 }
 
+function timer(duration, di) {
+
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
     getData();
-})
+});
+
+
