@@ -1,20 +1,51 @@
 * {
     margin: 0;
     padding: 0;
+    white-space: nowrap;
+    font-family: san;
+}
+
+h2, h3, h1 {
+    font-family: 'Erica One', cursive;
 }
 
 #header {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    font-size: 1.5rem;
+    font-size: 3.5rem;
     padding-bottom: 20px;
     background-color: rgb(167, 167, 196);
+    padding-left:30px;
+    background-color: peachpuff;
 }
 
 #header p {
-    padding-left: 20px;
-    padding-top: 10px;
+    padding-left: 40px;
+    padding-top: 50px;
+    font-size: 2rem;
+}
+
+button {
+    width: 150px;
+    height: 50px;
+    border: none;
+    margin: 10px;
+    border-radius: 15px;
+    font-size: 20px;
+    background-color: peachpuff;
+}
+
+.up-vote:hover {
+    transition-duration: 0.6ms;
+    background-color: rgb(78, 231, 147);
+    cursor: pointer;
+}
+
+.down-vote:hover {
+    transition-duration: 0.6ms;
+    background-color: rgb(224, 111, 111);
+    cursor: pointer;
 }
 
 img {
@@ -23,19 +54,65 @@ img {
 }
 
 .vote-data, 
-.title-image, 
-.vote-buttons {
+.title-image-1,
+.title-image-2, 
+.vote-buttons,
+.previous-vote-data {
     display: flex;
     flex-direction: column;
+    padding: 20px;
+    text-align: center;
 }
 
-#battle-area, #champion {
+.vote-data {
+    margin-top: 50px;
+}
+
+#battle-area {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     padding: 30px;
+    margin-left: 10px;
+    font-size: 2em;
 }
 
 #champion {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     padding: 30px;
+    margin-left: 80px;
+    font-size: 2em;
+}
+
+#champion h2 {
+    margin-left: -100px;
+    padding-bottom: 10px;
+}
+
+#champion .new-vote-data {
+    margin-top:15px;
+}
+
+#timer {
+    text-align: center;
+    margin-top: -20px;
+    padding-bottom: 100px;
+    font-size: 2em;
+    background-color: peachpuff;
+}
+
+.title-image-1 {
+    padding-right: 50px;
+}
+
+.previous-vote-data {
+    margin-top: 100px;
+    margin-left: -30px;
+    margin-right: 40px;
+}
+
+.previous-vote-data {
+    text-align: center;
 }
