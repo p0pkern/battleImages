@@ -131,12 +131,12 @@ function finishVoting() {
         replaceWinner(imgTwoVotes, imgTwo);
     } else if (imgThreeVotes > imgOneVotes && imgThreeVotes > imgTwoVotes) {
         // Code for if Challenger 2 wins
-        const imgThree = document.getElementById('img-two').getAttribute('src');
-        replaceWinner(imgThreeVotes, imgThree)
-
+        const imgThree = document.getElementById('img-three').getAttribute('src');
+        replaceWinner(imgThreeVotes, imgThree);
     } else {
         // If neither of the two images wins, we keep the winner and delete the challengers
         replaceChallengers();
+
     }
 
 }
