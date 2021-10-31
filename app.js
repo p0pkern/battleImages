@@ -88,18 +88,19 @@ const changeChallengers = (body) => {
    req.send(JSON.stringify(body));
    req.onload = function() {
     if (req.readyState == 4 && req.status <= 200 && req.status < 400) {
-        updateAll();
+        
     } else {
         console.log(req.responseText);
     }
-}
+    }
+    updateAll();
 }
 
 const getNewImage = () => {
     let response;
 
     const req = new XMLHttpRequest();
-    req.open("GET", "http://flip3.engr.oregonstate.edu:17778/getImage?response_type=link", false);
+    req.open("GET", "http://flip3.engr.oregonstate.edu:17778/getImage?response_type=random", false);
     req.onload = function() {
         if (req.readyState == 4 && req.status >= 200 && req.status < 400) {
             // const payLoad = JSON.parse(req.responseText);
@@ -135,27 +136,20 @@ const updateAll = () => {
         if (req.readyState == 4 && req.status >= 200 && req.status < 400) {
             const payLoad = JSON.parse(req.responseText);
 
-            if (votesPrev.innerText != payLoad['rows'][0]['championVotes']) {
-                votesPrev.innerText = payLoad['rows'][0]['championVotes'];
-            }
-            if (votesNew.innerText != payLoad['rows'][0]['championNewVotes']) {
-                votesNew.innerText = payLoad['rows'][0]['championNewVotes'];
-            }
-            if (votesOne.innerText != payLoad['rows'][0]['challengerOneVotes']) {
-                votesOne.innerText = payLoad['rows'][0]['challengerOneVotes'];
-            }
-            if (votesTwo.innerText != payLoad['rows'][0]['challengerTwoVotes']) {
-                votesTwo.innerText = payLoad['rows'][0]['challengerTwoVotes'];
-            }
-            if (imgOne.getAttribute('src') != payLoad['rows'][0]['championImg']) {
-                imgOne.setAttribute('src', payLoad['rows'][0]['championImg']);
-            }
-            if (imgTwo.getAttribute('src')  != payLoad['rows'][0]['challengerOneImg']) {
-                imgTwo.setAttribute('src', payLoad['rows'][0]['challengerOneImg']);
-            }
-            if (imgThree.getAttribute('src')  != payLoad['rows'][0]['challengerTwoImg']) {
-                imgThree.setAttribute('src', payLoad['rows'][0]['challengerTwoImg']);
-            }
+            votesPrev.innerText = payLoad['rows'][0]['championVotes'];
+            
+            votesNew.innerText = payLoad['rows'][0]['championNewVotes'];
+            
+            votesOne.innerText = payLoad['rows'][0]['challengerOneVotes'];
+            
+            votesTwo.innerText = payLoad['rows'][0]['challengerTwoVotes'];
+            
+            imgOne.setAttribute('src', payLoad['rows'][0]['championImg']);
+            
+            imgTwo.setAttribute('src', payLoad['rows'][0]['challengerOneImg']);
+            
+            imgThree.setAttribute('src', payLoad['rows'][0]['challengerTwoImg']);
+            
             
         } else {
             console.error(payLoad);
