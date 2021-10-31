@@ -1,9 +1,19 @@
+/*
+    Title - Battle Images
+    Author - Chris Peterman
+    Description: Vote on the best image on the internet one vote at a time. The image with the highest votes
+                 will be stored at the top with the winning amount of votes and all other images will be replaced.
+
+                Front End: JavaScript
+                Backend: MariaDB, Node.js
+*/
+
+
 const vote = (voteOn, amount) => {
     /*
         Increase and decrease the votes by an increment of 1 or -1
         Text on screen is updated before database is updated
     */
-
 
     // Increase/decrease the votes on the page first
     const newVote = Number(document.getElementById(voteOn).innerText) + Number(amount);
@@ -54,7 +64,7 @@ const totalVotes = () => {
 
 const changeWinner = (winner, winImg) => {
     /*
-        If the champion loses, we will replace the champion data with the new winner
+        Set up the body object with the current winners votes and img in the proper tags
     */
    const championVotes = document.getElementById(winner).innerText;
    const championImg = document.getElementById(winImg).getAttribute('src');
@@ -64,13 +74,16 @@ const changeWinner = (winner, winImg) => {
     "championImg" : championImg
    }
 
-   console.log(body)
-
    changeChallengers(body);
 
 }
 
 const changeChallengers = (body) => {
+   /*
+     Populates the rest of the body object with the updated data, resetting all votes to 0
+     and requesting new images from the image server.
+   */
+
    const challengerOneImg =  getNewImage();
    const challengerTwoImg =  getNewImage();
 
@@ -80,30 +93,31 @@ const changeChallengers = (body) => {
    body["challengerTwoImg"] = challengerTwoImg,
    body["challengerTwoVotes"] = 0;
 
-   console.log(body)
-
    const req = new XMLHttpRequest();
    req.open("POST", "http://flip1.engr.oregonstate.edu:2173/finishBattle", false);
    req.setRequestHeader('Content-Type', 'application/json');
    req.send(JSON.stringify(body));
    req.onload = function() {
     if (req.readyState == 4 && req.status <= 200 && req.status < 400) {
-        
-    } else {
-        console.log(req.responseText);
-    }
+        } else {
+            console.log(req.responseText);
+        }
     }
     updateAll();
 }
 
 const getNewImage = () => {
+    /*
+        Sends a request to a team members image server for one random image
+        In the servers current iteration it will bring one of 14 images,
+        duplicates are allowed.
+    */
     let response;
 
     const req = new XMLHttpRequest();
     req.open("GET", "http://flip3.engr.oregonstate.edu:17778/getImage?response_type=random", false);
     req.onload = function() {
         if (req.readyState == 4 && req.status >= 200 && req.status < 400) {
-            // const payLoad = JSON.parse(req.responseText);
             response = JSON.parse(req.responseText);
             
         } else {
@@ -117,8 +131,7 @@ const getNewImage = () => {
 
 const updateAll = () => {
     /*
-        Pulls the images and votes currently in the database and populates them into
-        their fields.
+        Updates the content on the page with all currently stored data in the database.
     */
 
     let votesPrev = document.getElementById("votes-prev");
@@ -137,20 +150,13 @@ const updateAll = () => {
             const payLoad = JSON.parse(req.responseText);
 
             votesPrev.innerText = payLoad['rows'][0]['championVotes'];
-            
             votesNew.innerText = payLoad['rows'][0]['championNewVotes'];
-            
             votesOne.innerText = payLoad['rows'][0]['challengerOneVotes'];
-            
             votesTwo.innerText = payLoad['rows'][0]['challengerTwoVotes'];
-            
             imgOne.setAttribute('src', payLoad['rows'][0]['championImg']);
-            
             imgTwo.setAttribute('src', payLoad['rows'][0]['challengerOneImg']);
-            
             imgThree.setAttribute('src', payLoad['rows'][0]['challengerTwoImg']);
-            
-            
+             
         } else {
             console.error(payLoad);
         }
