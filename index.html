@@ -17,25 +17,27 @@
         <p>By Chris Peterman</p>
     </div>
 
-    <!-- TEST -->
+    <!-- Finish Voting -->
     <div class="total-it">
-        <button onclick="totalVotes()">Total It!</button>
+        <button class="up-vote" onclick="totalVotes()">Finalize Votes!</button>
     </div>
-    <!-- TEST -->
 
     <!-- /* Winner Section */ -->
     <section id="champion">
 
+        <!--Previous winning votes -->
         <div class="previous-vote-data">
             <h3>Previous Votes!</h3>
             <p id="votes-prev">1</p>
         </div>
         
+        <!--Current Champions Image -->
         <div class="title-image champion-container">
             <h2>Champion</h2>
             <img id="img-one" src="https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg">
         </div>
-
+        
+        <!-- Section to upvote or downvote Champion -->
         <div class="vote-data new-vote-container">
             <div class="vote-data new-vote-data">
                 <h3>Votes</h3>
@@ -53,6 +55,7 @@
     <!-- Current Battle  -->
     <section id="battle-area">
 
+        <!-- Challenger one voting area -->
         <div class="vote-data">
             <div class="vote-data">
                 <h3>Votes</h3>
@@ -63,17 +66,18 @@
                 <button class="down-vote" onclick="vote('votes-1', '-1')">Remove Vote</button>
             </div>
         </div>
-
+        <!--Challenger One Image -->
         <div class="title-image-1">
             <h2>Challenger 1</h2>
             <img id="img-two" src="">
         </div>
 
+        <!--Challenger Two Image -->
         <div class="title-image-2">
             <h2>Challenger 2</h2>
             <img id="img-three" src="">
         </div>
-
+        <!-- Challenger Two Voting Area -->
         <div class="vote-data">
             <div class="vote-data">
                 <h3>Votes</h3>
@@ -84,14 +88,7 @@
                 <button class="down-vote" onclick="vote('votes-2', '-1')">Remove Vote</button>
             </div>
         </div>
-
-        
-    </section>
-
-    <!-- /* Timer */ -->
-    <section id="timer">
-        <h2>Time Until Battle Ends</h2>
-        <p id="timer-object"><span id="hours">HH</span> :: <span id="minutes">MM</span> :: <span id="seconds">SS</span></p>
+ 
     </section>
 
     <script src="./app.js" defer></script>
