@@ -14,20 +14,6 @@ const finishBattle = "UPDATE battleImages SET championVotes=?, championImg=?, ch
 const genericQuery = "SELECT * FROM battleImages";
 const voteQuery = "UPDATE battleImages SET championNewVotes=?, challengerOneVotes=?, challengerTwoVotes=? WHERE id=?";
 
-// These are just for troubleshooting/setup purposes
-const dropTableQuery = "DROP TABLE IF EXISTS battleImages";
-const makeTableQuery = `CREATE TABLE battleImages (
-                        id INT PRIMARY KEY AUTO_INCREMENT,
-                        championImg VARCHAR(2083) NOT NULL,
-                        championVotes INT,
-                        championNewVotes INT,
-                        challengerOneImg VARCHAR(2083) NOT NULL,
-                        challengerOneVotes INT,
-                        challengerTwoImg VARCHAR(2083) NOT NULL,
-                        challengerTwoVotes INT);`;
-const insertQuery = "INSERT INTO battleImages (`championImg`, `championVotes`, `championNewVotes`, `challengerOneImg`, `challengerOneVotes`, `challengerTwoImg`, `challengerTwoVotes`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-
 const getAllData = (res) => {
   /* 
     Selects all data from the current database field. All data is currently stored
