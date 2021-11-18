@@ -8,6 +8,18 @@
                 Backend: MariaDB, Node.js
 */
 
+const checkVotes = () => {
+  /*
+    Checks the vote pool to see if there are still votes to use
+  */
+
+   let votesPool = document.getElementById('votes-pool').innerText;
+
+   if (Number(votesPool) <= 1) {
+	totalVotes();
+   }
+
+}
 
 const vote = (voteOn, amount) => {
     /*
@@ -23,13 +35,19 @@ const vote = (voteOn, amount) => {
     const championNewVotes = document.getElementById('votes-new').innerText;
     const challengerOneVotes = document.getElementById('votes-1').innerText;
     const challengerTwoVotes = document.getElementById('votes-2').innerText;
+    
+    // Pull from vote pool and adjust
+    const votesPool = document.getElementById('votes-pool').innerText;
+    let adjustedVotes = Number(votesPool) - Number(amount);
+    votesPool.innerText = adjustedVotes;    
 
     const body = {
         "championNewVotes" : championNewVotes,
         "challengerOneVotes" : challengerOneVotes,
-        "challengerTwoVotes" : challengerTwoVotes
+        "challengerTwoVotes" : challengerTwoVotes,
+	"votesPool"	     : adjustedVotes
     }
-
+    
     // Update the vote contents of the mysql database and reload the page
     const req = new XMLHttpRequest();
     req.open('POST', "http://flip1.engr.oregonstate.edu:2173/vote", true)
@@ -43,6 +61,8 @@ const vote = (voteOn, amount) => {
             console.log(req.responseText);
         }
     }
+
+    checkVotes();
 }
 
 const totalVotes = () => {
@@ -92,6 +112,7 @@ const changeChallengers = (body) => {
    body["challengerOneVotes"] = 0;
    body["challengerTwoImg"] = challengerTwoImg,
    body["challengerTwoVotes"] = 0;
+   body["votesPool"] = Math.floor(Math.random() * 20) + 1;
 
    const req = new XMLHttpRequest();
    req.open("POST", "http://flip1.engr.oregonstate.edu:2173/finishBattle", false);
@@ -141,7 +162,7 @@ const updateAll = () => {
     let imgOne = document.getElementById("img-one");
     let imgTwo = document.getElementById("img-two");
     let imgThree = document.getElementById("img-three");
-
+    let votesPool = document.getElementById("votes-pool");
 
     const req = new XMLHttpRequest();
     req.open("GET", "http://flip1.engr.oregonstate.edu:2173/", false);
@@ -156,12 +177,15 @@ const updateAll = () => {
             imgOne.setAttribute('src', payLoad['rows'][0]['championImg']);
             imgTwo.setAttribute('src', payLoad['rows'][0]['challengerOneImg']);
             imgThree.setAttribute('src', payLoad['rows'][0]['challengerTwoImg']);
-             
+            votesPool.innerText = payLoad['rows'][0]['votesPool'];
+            
+            console.log(payLoad['rows'][0]); 
         } else {
             console.error(payLoad);
         }
     }
     req.send(null);
 }
+
 
 document.addEventListener('DOMContentLoaded', updateAll());

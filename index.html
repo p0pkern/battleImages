@@ -11,15 +11,11 @@
     <title>Battle Images!</title>
 </head>
 <body>
+    <div class="body-container">
     <!-- /* Top Title */ -->
     <div id="header">
         <h1>Battle Images!</h1>
         <p>By Chris Peterman</p>
-    </div>
-
-    <!-- Finish Voting -->
-    <div class="total-it">
-        <button class="up-vote" onclick="totalVotes()">Finalize Votes!</button>
     </div>
 
     <!-- /* Winner Section */ -->
@@ -51,6 +47,13 @@
         </div>
 
     </section>
+
+     <!-- Finish Voting -->
+     <div class="total-it">
+        <button class="up-vote" onclick="totalVotes()">Finalize Votes!</button>
+  	<h4>Votes Left! </h4> 
+        <p class="votes-new"  id="votes-pool"> </p>
+     </div>
 
     <!-- Current Battle  -->
     <section id="battle-area">
@@ -90,6 +93,9 @@
         </div>
  
     </section>
+    <div class="footer"> </div>
+
+    </div>
 
     <script src="./app.js" defer></script>
 </body>

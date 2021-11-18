@@ -10,15 +10,27 @@ app.use('/public_html', express.static('./public_html/'));
 app.use(CORS());
 
 // Query parameters
-const finishBattle = "UPDATE battleImages SET championVotes=?, championImg=?, championNewVotes=?, challengerOneImg=?, challengerOneVotes=?, challengerTwoImg=?, challengerTwoVotes=? WHERE id=? ";
+const finishBattle = "UPDATE battleImages SET championVotes=?, championImg=?, championNewVotes=?, challengerOneImg=?, challengerOneVotes=?, challengerTwoImg=?, challengerTwoVotes=?, votesPool=?  WHERE id=? ";
 const genericQuery = "SELECT * FROM battleImages";
-const voteQuery = "UPDATE battleImages SET championNewVotes=?, challengerOneVotes=?, challengerTwoVotes=? WHERE id=?";
+const voteQuery = "UPDATE battleImages SET championNewVotes=?, challengerOneVotes=?, challengerTwoVotes=?, votesPool=?  WHERE id=?";
 
+// These are just for troubleshooting/setup purposes
+const dropTableQuery = "DROP TABLE IF EXISTS battleImages";
+const makeTableQuery = `CREATE TABLE battleImages (
+                        id INT PRIMARY KEY AUTO_INCREMENT,
+                        championImg VARCHAR(2083) NOT NULL,
+                        championVotes INT,
+                        championNewVotes INT,
+                        challengerOneImg VARCHAR(2083) NOT NULL,
+                        challengerOneVotes INT,
+                        challengerTwoImg VARCHAR(2083) NOT NULL,
+                        challengerTwoVotes INT,
+			votesPool INT);`;
+const insertQuery = "INSERT INTO battleImages (`championImg`, `championVotes`, `championNewVotes`, `challengerOneImg`, `challengerOneVotes`, `challengerTwoImg`, `challengerTwoVotes`, `votesPool` ) VALUES (?, ?, ?, ?, ?, ?,?, ?)";
+
+
+// Get request for all data
 const getAllData = (res) => {
-  /* 
-    Selects all data from the current database field. All data is currently stored
-    in a single row of the database.
-  */
     mysql.pool.query(genericQuery, (err, rows, fields) => {
       if(err){
         next(err);
@@ -28,17 +40,16 @@ const getAllData = (res) => {
     })
   }
 
-
+// Retrieve all current data in the database
 app.get('/', function(req, res, next) {
-    /* Get request for all data in the current field */
     getAllData(res)
 })
 
+// Update the votes for all of the images in the database
 app.post('/vote', function(req, res, next) {
-  /* Updates votes in the MySQL database, and retrieves the current votes to display */
-  const {championNewVotes, challengerOneVotes, challengerTwoVotes} = req.body;
+  const {championNewVotes, challengerOneVotes, challengerTwoVotes, votesPool} = req.body;
 
-  mysql.pool.query(voteQuery, [championNewVotes, challengerOneVotes, challengerTwoVotes, 1], (err, results) => {
+  mysql.pool.query(voteQuery, [championNewVotes, challengerOneVotes, challengerTwoVotes, votesPool, 1], (err, results) => {
     if(err){
       next(err);
       return;
@@ -48,14 +59,10 @@ app.post('/vote', function(req, res, next) {
 });
 
 app.post('/finishBattle', function(req, res, next) {
-  /* 
-    Finishes the battle and updates the champion if necessary, otherwise will set all votes
-    to 0 (handled client side) and updates the database with the new images pulled from a separate server.
-    Afterward data will be requested so the page can be updated.
-  */
-  const {championVotes, championNewVotes, championImg, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes} = req.body;
+  // championVotes=?, championImg=?, championNewVotes=?, challengerOneImg=?, challengerOneVotes=?, challengerTwoImg=?, challengerTwoVotes=?
+  const {championVotes, championNewVotes, championImg, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes, votesPool} = req.body;
 
-  mysql.pool.query(finishBattle, [championVotes, championImg, championNewVotes, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes, 1], (err, results) =>{
+  mysql.pool.query(finishBattle, [championVotes, championImg, championNewVotes, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes, votesPool, 1], (err, results) =>{
     if(err){
       next(err);
       return;
@@ -64,13 +71,62 @@ app.post('/finishBattle', function(req, res, next) {
   })
 })
 
-// 404 Error response
+// TROUBLE SHOOTING TO BE DELETED
+// Reset the table to empty values for troubleshooting
+app.get('/reset-table',function(req,res,next){
+    mysql.pool.query(dropTableQuery, function(err){
+      mysql.pool.query(makeTableQuery, function(err){
+        const championImg = "https://image.shutterstock.com/image-vector/random-blotch-inkblot-organic-blob-600w-1612925449.jpg";
+        const championVotes = 0;
+        const championNewVotes = 0;
+        const challengerOneImg = "https://image.shutterstock.com/image-vector/mystery-box-random-loot-flat-600w-1469820695.jpg";
+        const challengerOneVotes = 0;
+        const challengerTwoImg = "https://www.kenyons.com/wp-content/uploads/2017/04/default-image.jpg";
+        const challengerTwoVotes = 0;
+        const votesPool = 10;
+ 
+        mysql.pool.query(insertQuery, 
+            [championImg, championVotes, championNewVotes, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes, votesPool], 
+            (err, result) => {
+            if(err){
+                next(err);
+                return;
+            }
+            getAllData(res);
+        })
+        
+      })
+    });
+  });
+
+app.get('/update', function(req, res, next) {
+    /* Check the update functionality to ensure database updates */
+    const idRow = 1;
+    const championImg = "";
+    const championVotes = 4;
+    const championNewVotes = 0;
+    const challengerOneImg = "";
+    const challengerOneVotes = 0;
+    const challengerTwoImg = "";
+    const challengerTwoVotes = 0;
+    const votesPool = 15; 
+
+    mysql.pool.query(finishBattle, [championImg, championVotes, championNewVotes, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes,votesPool, idRow], 
+        (err, result) => {
+            if(err){
+                next(err);
+                return;
+            }
+            getAllData(res);
+    })
+})
+
+// Error responses
 app.use(function(req,res){
     res.status(404);
     console.log('404');
   });
-
-// 500+ errors
+  
   app.use(function(err, req, res, next){
     console.error(err.stack);
     res.status(500);
