@@ -10,7 +10,7 @@
 
 const checkVotes = () => {
   /*
-    Checks the vote pool to see if there are still votes to use
+     Verifies votes amount and activates winner check when result it 
   */
 
    let votesPool = document.getElementById('votes-pool').innerText;
