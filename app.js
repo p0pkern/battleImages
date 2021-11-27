@@ -47,7 +47,11 @@ const vote = (voteOn, amount) => {
         "challengerTwoVotes" : challengerTwoVotes,
 	"votesPool"	     : adjustedVotes
     }
-    
+
+   updateVotes(body); 
+}
+
+const updateVotes = (body) => {
     // Update the vote contents of the mysql database and reload the page
     const req = new XMLHttpRequest();
     req.open('POST', "http://flip1.engr.oregonstate.edu:2173/vote", true)
@@ -63,6 +67,7 @@ const vote = (voteOn, amount) => {
     }
 
     checkVotes();
+
 }
 
 const totalVotes = () => {
