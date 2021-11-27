@@ -9,12 +9,10 @@ app.set('port', 2173);
 app.use('/public_html', express.static('./public_html/'));
 app.use(CORS());
 
-// Query parameters
 const finishBattle = "UPDATE battleImages SET championVotes=?, championImg=?, championNewVotes=?, challengerOneImg=?, challengerOneVotes=?, challengerTwoImg=?, challengerTwoVotes=?, votesPool=?  WHERE id=? ";
 const genericQuery = "SELECT * FROM battleImages";
 const voteQuery = "UPDATE battleImages SET championNewVotes=?, challengerOneVotes=?, challengerTwoVotes=?, votesPool=?  WHERE id=?";
 
-// These are just for troubleshooting/setup purposes
 const dropTableQuery = "DROP TABLE IF EXISTS battleImages";
 const makeTableQuery = `CREATE TABLE battleImages (
                         id INT PRIMARY KEY AUTO_INCREMENT,
@@ -59,7 +57,6 @@ app.post('/vote', function(req, res, next) {
 });
 
 app.post('/finishBattle', function(req, res, next) {
-  // championVotes=?, championImg=?, championNewVotes=?, challengerOneImg=?, challengerOneVotes=?, challengerTwoImg=?, challengerTwoVotes=?
   const {championVotes, championNewVotes, championImg, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes, votesPool} = req.body;
 
   mysql.pool.query(finishBattle, [championVotes, championImg, championNewVotes, challengerOneImg, challengerOneVotes, challengerTwoImg, challengerTwoVotes, votesPool, 1], (err, results) =>{
