@@ -156,3 +156,8 @@ img {
 .total-it {
    text-align: center;
 }
+
+#votes-pool {
+    color: red;
+    font-size: 16;
+}
