@@ -1,3 +1,13 @@
+/*
+	Title: battleImages dbaseQuery
+	Author: Chris Peterman
+	Description: This contains all the functionality for the Battle Images homepage when talking to the
+	database. 
+
+	uses: Node.js, express.js, MariaDB
+*/
+
+
 const mysql = require('./dbcon.js');
 const express = require('express');
 const CORS = require('cors');
